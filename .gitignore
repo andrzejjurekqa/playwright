@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 allure-results
 my-allure-results
 .env
@@ -133,6 +134,12 @@ dist
 .pnp.*
 /test-results/
 /playwright-report/
+=======
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+>>>>>>> d51eb2a (Initial commit)
 /playwright/.cache/
 /test-results/
 /playwright-report/

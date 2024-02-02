@@ -2,10 +2,14 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
+<<<<<<< HEAD
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/playwright-report" />
       <excludeFolder url="file://$MODULE_DIR$/test-results" />
     </content>
+=======
+    <content url="file://$MODULE_DIR$" />
+>>>>>>> d51eb2a (Initial commit)
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
