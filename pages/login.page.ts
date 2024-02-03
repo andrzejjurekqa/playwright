@@ -1,36 +1,23 @@
 import { Page, Locator } from "@playwright/test";
 
-export class LoginPage{
-
-    page: Page;
-    userNameInputField: Locator;
-    passInputField: Locator;
-    loginButton: Locator;
-    productPageTitle:Locator;
-    errorMessage: Locator;
-
-    constructor(page:Page){
+export class LoginPage {
+    constructor(page) {
         this.page = page;
-        this.userNameInputField = page.locator('#user-name');
-        this.passInputField = page.locator('#password');
+        this.usernameField = page.locator('#user-name');
+        this.passwordField = page.locator('#password');
         this.loginButton = page.locator('#login-button');
-        this.productPageTitle = page.locator('.product_label');
         this.errorMessage = page.locator('h3[data-test=error]');
+        this.title = page.locator('.title');
     }
-
-    async navigation(){
-        await this.page.goto('https://www.saucedemo.com/v1');
-    }
-
-    async inputUserCred(userName:string, userPass:string):Promise<void>{
-        await this.userNameInputField.type(userName);
-        await this.passInputField.type(userPass);
+    async login(username:string, password:string):Promise<void>{
+        await this.usernameField.type(username);
+        await this.passwordField.type(password);
         await this.loginButton.click();
     }
-
-    async invalidLoginErrorMessage():Promise<string | null>{
-        return this.errorMessage.textContent();
+    async error(){
+        await this.errorMessage.toHaveText(/Username and password do not match any user in this service/);
     }
-
+    async title(){
+        await this.title.toHaveText('Products');
+    }
 }
-//export default LoginPage;
