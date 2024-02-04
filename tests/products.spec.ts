@@ -27,7 +27,7 @@ test.describe('Verify products page', () => {
     test('Verify product can be added to the cart', async ({page}) => {
         await productPage.addToCart(option1);
         await productPage.addToCart(option2);
-        await productPage.checkShoppingCart()
+        await productPage.checkShoppingCart();
         const title = page.locator('.title');
         await expect(title).toHaveText('Your Cart');
     })
