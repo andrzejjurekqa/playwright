@@ -1,13 +1,26 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Verify API call', () => {
-        test('Verify response data', async ({ request }) => {
-        const response = await request.get('https://reqres.in/api/users/2');
+
+    const urlBase = 'https://reqres.in/api/';
+    test('Verify get', async ({ request }) => {
+        const response = await request.get(`${urlBase}users/2`);
         const responseBody = await response.json();
 
-        await expect(responseBody.data.first_name).toBe('Janet');
-        await expect(responseBody.data.email).toBe('janet.weaver@reqres.in');
-        await expect(response.status()).toBe(200);
-
+        expect(responseBody.data.first_name).toBe('Janet');
+        expect(responseBody.data.email).toBe('janet.weaver@reqres.in');
+        expect(response.status()).toBe(200);
     });
+    test('Verify post', async ({request}) => {
+        const response = await request.post(`${urlBase}users`, {
+            'email': 'eve.holt@reqres.in', 'password': 'pistol'
+        })
+        expect(response.status()).toBe(201);
+    });
+    test('Verify delete', async ({request}) => {
+        const response = await request.delete(`${urlBase}users`, {
+        "data":{"id":2,"email":"janet.weaver@reqres.in","first_name":"Janet","last_name":"Weaver","avatar":"https://reqres.in/img/faces/2-image.jpg"},"support":{"url":"https://reqres.in/#support-heading","text":"To keep ReqRes free, contributions towards server costs are appreciated!"}
+        })
+        expect(response.status()).toBe(204);
+    })
 });
