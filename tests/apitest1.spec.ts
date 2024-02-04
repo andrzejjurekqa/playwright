@@ -23,4 +23,16 @@ test.describe('Verify API call', () => {
         })
         expect(response.status()).toBe(204);
     })
+    test('Verify put', async ({request}) => {
+        const response = await request.put(`${urlBase}users/2`, {
+            "name": "morpheus", "job": "zion resident"
+        })
+        expect(response.status()).toBe(200);
+    })
+    test('Verify patch', async ({request}) => {
+        const response = await request.patch(`${urlBase}users/2`, {
+            "name": "morpheus", "job": "zion resident"
+        })
+        expect(response.status()).toBe(200);
+    })
 });
