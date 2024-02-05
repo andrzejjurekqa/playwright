@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { data } from '../test-data/importedData.json';
 
 test.describe('Verify API call', () => {
 
@@ -71,12 +72,22 @@ test.describe('Verify API call', () => {
     test('Verify incorrect login', async ({ request }) => {
         const response = await request.post(`${urlBase}login`, {
             "data": {
-                "email": "eve.holt@reqres.in",
+                "email": "eve.holt@reqres.in"
             }
         })
         const responseBody = await response.json();
 
         expect(responseBody.error).toBeTruthy();
         expect(response.status()).toBe(400);
+    })
+    test('Verify sending data defined elsewhere', async ({ request }) => {
+        const response = await request.put(`${urlBase}users/2`, {
+            "data": data
+        })
+        const responseBody = await response.json();
+
+        expect(responseBody.name).toBe('Jebediah');
+        expect(responseBody.job).toBe('leader');
+        expect(response.status()).toBe(200);
     })
 });
