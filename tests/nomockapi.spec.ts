@@ -13,9 +13,10 @@ test.describe('Verify API call', () => {
     })
     test('Verify post', async ({ request }) => {
         const response = await request.post(`${urlBase}users`, {
-        "data": {
-            'name': 'Jebediah', 'job': 'leader'
-        }})
+            "data": {
+                'name': 'Jebediah', 'job': 'leader'
+            }
+        })
         const responseBody = await response.json();
 
         expect(responseBody.name).toBe('Jebediah');
@@ -35,8 +36,9 @@ test.describe('Verify API call', () => {
         const response = await request.put(`${urlBase}users/2`, {
             "data": {
                 'name': 'Jebediah', 'job': 'leader'
-            }})
-            const responseBody = await response.json();
+            }
+        })
+        const responseBody = await response.json();
 
         expect(responseBody.name).toBe('Jebediah');
         expect(responseBody.job).toBe('leader');
@@ -46,11 +48,35 @@ test.describe('Verify API call', () => {
         const response = await request.patch(`${urlBase}users/2`, {
             "data": {
                 'name': 'Jebediah', 'job': 'leader'
-            }})
-            const responseBody = await response.json();
+            }
+        })
+        const responseBody = await response.json();
 
         expect(responseBody.name).toBe('Jebediah');
         expect(responseBody.job).toBe('leader');
         expect(response.status()).toBe(200);
+    })
+    test('Verify correct login', async ({ request }) => {
+        const response = await request.post(`${urlBase}login`, {
+            "data": {
+                "email": "eve.holt@reqres.in",
+                "password": "cityslicka"
+            }
+        })
+        const responseBody = await response.json();
+
+        expect(responseBody.token).toBe('QpwL5tke4Pnpja7X4');
+        expect(response.status()).toBe(200);
+    })
+    test('Verify incorrect login', async ({ request }) => {
+        const response = await request.post(`${urlBase}login`, {
+            "data": {
+                "email": "eve.holt@reqres.in",
+            }
+        })
+        const responseBody = await response.json();
+
+        expect(responseBody.error).toBeTruthy();
+        expect(response.status()).toBe(400);
     })
 });
