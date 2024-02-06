@@ -9,19 +9,18 @@ test.describe('Verify products page', () => {
         loginPage = new LoginPage(page);
         await page.goto('https://www.saucedemo.com');
         await loginPage.login('problem_user', 'secret_sauce');
-    })
+    });
     test.afterAll(async () => {
         console.log('Done');
-    })
+    });
 
     test('Verify product page', async ({ page }) => {
         productPage = new ProductPage(page);
-        const title = page.locator('.title');
-        await expect(title).toHaveText('Products');
+        await expect(page.locator('.title')).toHaveText('Products');
         await expect(productPage.sortingButton).toBeVisible();
         await expect(productPage.shoppingCart).toBeVisible();
         //await expect(productPage.inventory).toBeVisible();
-    })
+    });
 
     //add more deets
 //     test('Verify product can be added to the cart', async ({ page }) => {
