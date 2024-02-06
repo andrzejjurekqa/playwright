@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 
+test.setTimeout(120000);
 test.describe('Verify mock API call', () => {
     test('mocks a fruit and does not call api', async ({ page }) => {
-      test.setTimeout(120000);
       // Mock the api call before navigating
       await page.route('*/**/api/v1/fruits', async (route) => {
         const json = [{ name: 'Strawberry', id: 21 }];
@@ -15,4 +15,3 @@ test.describe('Verify mock API call', () => {
       await expect(page.getByText('Strawberry')).toBeVisible();
     });
 })
-

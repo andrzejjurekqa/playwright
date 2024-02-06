@@ -1,12 +1,14 @@
 import { Page, Locator } from "@playwright/test";
 
 export class ProductPage {
-    page : Locator;
+    
+    page : Page;
     shoppingCart: Locator;
     sortingButton: Locator;
     inventory: Locator;
     product1: Locator;
     product2: Locator;
+
     constructor(page) {
         this.page = page;
         this.shoppingCart = page.locator('#shopping_cart_container');

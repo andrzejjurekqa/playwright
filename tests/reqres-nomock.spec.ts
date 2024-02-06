@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { data } from '../test-data/reqres-post.json';
-import { deldata } from '../test-data/reqres-delete.json';
+import * as deletedData  from '../test-data/reqres-delete.json';
 
 test.describe('Verify API call', () => {
 
@@ -27,7 +27,7 @@ test.describe('Verify API call', () => {
     })
     test('Verify delete', async ({ request }) => {
         const response = await request.delete(`${urlBase}users`, {
-            "data" : deldata
+            "data" : deletedData
            })
         expect(response.status()).toBe(204);
     })

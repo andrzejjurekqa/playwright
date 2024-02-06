@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login.page';
 import { ProductPage } from '../pages/products.page';
 
+test.setTimeout(120000);
 test.describe('Verify products page', () => {
     let loginPage;
     let productPage;
@@ -9,9 +10,6 @@ test.describe('Verify products page', () => {
         loginPage = new LoginPage(page);
         await page.goto('https://www.saucedemo.com');
         await loginPage.login('problem_user', 'secret_sauce');
-    });
-    test.afterAll(async () => {
-        console.log('Done');
     });
 
     test('Verify product page', async ({ page }) => {
