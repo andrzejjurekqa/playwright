@@ -19,6 +19,7 @@ test.describe('Verify products page', () => {
         await expect(page.locator('.title')).toHaveText('Products');
         await expect(productPage.sortingButton).toBeVisible();
         await expect(productPage.shoppingCart).toBeVisible();
+        await page.locator('#shopping_cart_container').click();
         //await expect(productPage.inventory).toBeVisible();
     });
 

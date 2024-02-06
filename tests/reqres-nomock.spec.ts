@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { data } from '../test-data/importedData.json';
+import { data } from '../test-data/reqres-post.json';
+import { deldata } from '../test-data/reqres-delete.json';
 
 test.describe('Verify API call', () => {
 
@@ -26,11 +27,8 @@ test.describe('Verify API call', () => {
     })
     test('Verify delete', async ({ request }) => {
         const response = await request.delete(`${urlBase}users`, {
-            //change into imported json
-            "data": {
-            "id":2,"email":"janet.weaver@reqres.in","first_name":"Janet","last_name":"Weaver","avatar":"https://reqres.in/img/faces/2-image.jpg"},"support":{"url":"https://reqres.in/#support-heading","text":"To keep ReqRes free, contributions towards server costs are appreciated!"}
-        })
-
+            "data" : deldata
+           })
         expect(response.status()).toBe(204);
     })
     test('Verify put', async ({ request }) => {
