@@ -18,5 +18,7 @@ export class ProductPage {
         this.product2 = page.locator('');
     }
 
-    //async addToShoppingCart()
+    async addToShoppingCart(name: string){
+        //async 
+    }
 }
