@@ -8,17 +8,6 @@ export class RahulPage {
     invalidMessage: Locator;
 
     constructor(page) {
-        //id preswent = #id
-        //class attribute present = .class
-        //css attributes present = [attribute ='attribute name']
-        //text present = text''
-        //xpath
-        //how to get to child: ".class a" with nth() to call specific item in the list [0, 1, 2 ...]
-
-        //page.locator(".class a").first().textContent()
-        //page.locator(".class a").nth(1).textContent() / second etc
-
-        //allTextContents() does not have any actions, so specify something else too
         this.page = page;
         this.emailField = page.locator('#email'); //#email email
         this.passwordField = page.locator('#password');
@@ -38,5 +27,19 @@ export class RahulPage {
     }
 }
 
+//id preswent = #id
+//class attribute present = .class
+//css attributes present = [attribute ='attribute name']
+//text present = text''
+//xpath
+//how to get to child: ".class a" with nth() to call specific item in the list [0, 1, 2 ...]
+
+//page.locator(".class a").first().textContent() or .last()
+//page.locator(".class a").nth(1).textContent() / second etc
+
+//allTextContents() does not have any actions, so specify something else too
+
+//toBeChecked - checkbox true
+//toHaveAttribute('type', 'text')
 
 
