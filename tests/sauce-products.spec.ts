@@ -9,6 +9,7 @@ test.describe('Verify products page', () => {
     test.beforeEach(async ({ page }) => {
         loginPage = new LoginPage(page);
         await page.goto('https://www.saucedemo.com');
+        await page.waitForLoadState('networkidle');
         await loginPage.login('problem_user', 'secret_sauce');
     });
 
