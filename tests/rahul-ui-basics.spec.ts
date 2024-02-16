@@ -1,48 +1,43 @@
 import { test, expect } from '@playwright/test';
 import { RahulPage } from '../pages/rahul-login.page';
 
+//remake this test into clear steps
+
 test.describe('First Playwright Test Describe', async () => {
-    let loginPage;
-    test.beforeEach(async ({page}) => {
-        loginPage = new RahulPage(page);
-        await page.goto("https://sso.teachable.com/secure/9521/identity/login/password");
-    });
+
+    // test.beforeEach(async ({ page}) => {
+        
+    // });
 
         //test.use({ browserName: 'webkit'});
     test('@Web Browser Context-Validating Error login', async ({ browser }) => {
-
         const context = await browser.newContext();
         const page = await context.newPage();
+        let loginPage = new RahulPage(page);
         // page.route('**/*.{jpg,png,jpeg}',route=> route.abort());
-        const userName = page.locator('#username');
-        const signIn = page.locator("#signInBtn");
-        const cardTitles = page.locator(".card-body a");
-        page.on('request', request => console.log(request.url()));
+        page.on('request', request => console.log(request.url())); //add this to other tests
         page.on('response', response => console.log(response.url(), response.status()));
         await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
         console.log(await page.title());
         //css 
-        await userName.fill("rahulshetty");
-        await page.locator("[type='password']").fill("learning");
-        await signIn.click();
+        await loginPage.usernameField.fill("rahulshetty");
+        await loginPage.passwordField.fill("learning");
+        await loginPage.loginButton.click();
         console.log(await page.locator("[style*='block']").textContent());
         await expect(page.locator("[style*='block']")).toContainText('Incorrect');
         //type - fill
-        await userName.fill("");
-        await userName.fill("rahulshettyacademy");
-        await signIn.click();
-        console.log(await cardTitles.first().textContent());
-        console.log(await cardTitles.nth(1).textContent());
-        const allTitles = await cardTitles.allTextContents();
+        await loginPage.usernameField.fill("rahulshettyacademy");
+        await loginPage.loginButton.click();
+        console.log(await loginPage.cardTitles.first().textContent());
+        console.log(await loginPage.cardTitles.nth(1).textContent());
+        const allTitles = await loginPage.cardTitles.allTextContents();
 
         console.log(allTitles);
     });
 
-
     test('@Web UI Controls', async ({ page }) => {
+        let loginPage = new RahulPage(page);
         await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
-        const userName = page.locator('#username');
-        const signIn = page.locator("#signInBtn");
         const documentLink = page.locator("[href*='documents-request']");
         const dropdown = page.locator("select.form-control");
         await dropdown.selectOption("consult");
@@ -56,6 +51,35 @@ test.describe('First Playwright Test Describe', async () => {
         expect(await page.locator("#terms").isChecked()).toBeFalsy();
         await expect(documentLink).toHaveAttribute("class", "blinkingText");
     });
+
+    test('Child windows hadl', async ({browser})=> {
+        const context = await browser.newContext(); //explore more newContext
+        const page = await context.newPage();
+        let loginPage = new RahulPage(page);
+        await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+        const [newPage] = await Promise.all([ //!IMPORTANT fulfil both before continuing
+        context.waitForEvent('page'),
+        await loginPage.documentLink.click() // new page is opened
+        ]) 
+        const text = await newPage.locator(".red").textContent();
+        const emailArray = text!.split("@"); //!! IMPORTANT
+        const domainName = emailArray[1].split(" ")[0];
+        console.log(domainName);
+        await loginPage.usernameField.fill(domainName);
+        await page.pause();
+    })
+
+    test('Login and add to cart', async ({ page })=> {
+        let loginPage = new RahulPage(page);
+        await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+        await loginPage.usernameField.fill("rahulshettyacademy");
+        await loginPage.passwordField.fill("learning");
+        await page.locator(".radiotextsty").last().click();
+        await page.locator("#okayBtn").click();
+        await page.locator("#terms").click();
+        await page.locator("#signInBtn").click();
+        await loginPage.addToCart('iphone X');
+    });
 });
 
 /*
@@ -65,3 +89,6 @@ Rahul page that was deprecated
 3. page.locator(".class a").allTextContents();
 3. page.locator(".class a").nth(0).textContent();
 */
+
+//Listen for new page to open
+//3 states of promise: pending, rejected, fulfilled

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import * as postData from '../test-data/reqres-post.json';
+import * as postData from '../../test-data/reqres-post.json';
 
 test.describe('Verify mock API call', () => {
     test('Verify mocked post', async ({ page }) => {
