@@ -23,7 +23,6 @@ export class RahulPage {
         this.cardTitles = page.locator(".card-body a");
         this.documentLink = page.locator("[href*='documents-request']");
     }
-
     async provideInvCredentials(): Promise<void> {
         await this.usernameField.fill('username');
         await this.passwordField.fill('password');
@@ -34,7 +33,7 @@ export class RahulPage {
         await this.passwordField.fill('password');
         await this.loginButton.click();
     }
-    async addToCart(productName: string): Promise < void> {
+    async addToCart(productName: string): Promise <void> {
         for(let i = 0; i <await this.productId.count(); i++) {
             if (await this.productId.nth(i).textContent() == productName) {
                 await this.addButton.nth(i).click();
