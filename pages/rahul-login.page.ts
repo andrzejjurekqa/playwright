@@ -10,6 +10,8 @@ export class RahulPage {
     addButton: Locator;
     cardTitles: Locator;
     documentLink: Locator;
+    checkoutButton: Locator;
+    addIphone: Locator;
 
 
     constructor(page) {
@@ -18,10 +20,12 @@ export class RahulPage {
         this.passwordField = page.locator("[type='password']");
         this.loginButton = page.locator("#signInBtn");
         this.invalidMessage = page.locator('html/body/main/div/div[4]/div/span/svg');
-        this.productId = page.locator('.app-card');
-        this.addButton = page.getByRole('button', {name: 'Add To Cart'});
+        this.productId = page.locator('.app-body');
+        this.addButton = page.getByRole('button', {name: 'Add '});
+        this.addIphone = this.productId.filter({ hasText: 'Add ' }).getByRole('button');
         this.cardTitles = page.locator(".card-body a");
         this.documentLink = page.locator("[href*='documents-request']");
+        this.checkoutButton = page.getByText('Checkout');       
     }
     async provideInvCredentials(): Promise<void> {
         await this.usernameField.fill('username');
@@ -33,10 +37,13 @@ export class RahulPage {
         await this.passwordField.fill('password');
         await this.loginButton.click();
     }
-    async addToCart(productName: string): Promise <void> {
-        for(let i = 0; i <await this.productId.count(); i++) {
-            if (await this.productId.nth(i).textContent() == productName) {
-                await this.addButton.nth(i).click();
+    async addToCart(productName: string): Promise<void> {
+        const count = await this.productId.count();
+        for (let i = 0; i < count; ++i) {
+            if (await this.productId.nth(i).locator("b").textContent() === productName) {
+                //add to cart
+                await this.productId.nth(i).locator("text= Add To Cart").click();
+                break;
             }
         }
     }

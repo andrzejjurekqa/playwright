@@ -1,13 +1,9 @@
 import { test, expect } from '@playwright/test';
-import { RahulPage } from '../pages/rahul-login.page';
-
-//remake this test into clear steps
+import { RahulPage } from '../../pages/rahul-login.page';
 
 test.describe('First Playwright Test Describe', async () => {
 
-    // test.beforeEach(async ({ page}) => {
-        
-    // });
+    // test.beforeEach(async ({ page}) => {});
 
         //test.use({ browserName: 'webkit'});
     test('@Web Browser Context-Validating Error login', async ({ browser }) => {
@@ -68,18 +64,6 @@ test.describe('First Playwright Test Describe', async () => {
         await loginPage.usernameField.fill(domainName);
         await page.pause();
     })
-
-    test('Login and add to cart', async ({ page })=> {
-        let loginPage = new RahulPage(page);
-        await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
-        await loginPage.usernameField.fill("rahulshettyacademy");
-        await loginPage.passwordField.fill("learning");
-        await page.locator(".radiotextsty").last().click();
-        await page.locator("#okayBtn").click();
-        await page.locator("#terms").click();
-        await page.locator("#signInBtn").click();
-        await loginPage.addToCart('iphone X');
-    });
 });
 
 /*
