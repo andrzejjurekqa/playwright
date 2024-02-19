@@ -17,7 +17,7 @@ test('Client App Login', async ({page}) => {
             break;
         };
     };
-    await expect(page.locator('div')).toHaveText('Product Added To Cart');
+    await expect(page.locator('div').filter({ hasText: 'Product Added To Cart' }).nth(2)).toBeVisible();
     await page.locator("[routerLink*='cart']").click();
     await page.waitForLoadState('networkidle');
     await page.locator("div li").first().waitFor();
@@ -33,7 +33,6 @@ test('Client App Login', async ({page}) => {
             break;
         };
     };
-    await expect(page.locator('div')).toHaveText('Order Placed Successfully');
     await page.locator('input[type="text"]').first().clear();
     await page.locator('input[type="text"]').first().fill('4542 9931 1234 2293');
     await page.getByRole('combobox').first().selectOption('07');
@@ -45,6 +44,7 @@ test('Client App Login', async ({page}) => {
     //await page.locator('text=Apply Coupon').first().click();
     await expect(page.locator('.user__name [type="text"]').first()).toHaveText('anshika@gmail.com');
     await page.locator("text=PLACE ORDER").click();
+    await expect(page.locator('div').filter({ hasText: 'Order Placed Successfully' }).nth(2)).toBeVisible();
     await expect(page.locator('.hero-primary')).toHaveText(' Thankyou for the order. ');
     const orderNumber = await page.locator('.em-spacer-1 .ng-star-inserted').textContent();
     console.log(orderNumber);
@@ -62,6 +62,16 @@ test('Client App Login', async ({page}) => {
     };
     await page.locator('.tagline').waitFor();
     await expect(page.locator('.tagline')).toHaveText('Thank you for Shopping With Us');
-    await expect(page.locator('col-text')).toHaveText(orderNumber!);
+    function splitMulti(str, tokens):[] {
+        var tempChar = tokens[0]; // We can use the first token as a temporary join character
+        for (var i = 1; i < tokens.length; i++) {
+            str = str.split(tokens[i]).join(tempChar);
+        }
+        str = str.split(tempChar);
+        return str;
+    };
+    const newOrderNumber = splitMulti(orderNumber!, ['|', ' ']).slice(3, 4).toString();//!! IMPORTANT
+    console.log(newOrderNumber);
+    await expect(page.locator('.col-text')).toHaveText(newOrderNumber!);
     
 });
