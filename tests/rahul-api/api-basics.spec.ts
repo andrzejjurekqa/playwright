@@ -6,17 +6,13 @@ const orderPayload = { orders: [{ country: "Barbados", productOrderedId: "6581ca
 let response;
 
 test.beforeAll( async () => {
-    //before (test 1, test 2, test 3)
-    //Login API
     const apiContext = await request.newContext();
     let newAPICalls = new APICalls(apiContext, loginPayload);
     newAPICalls.loginApi();
-    //Order APi
     response = await newAPICalls.orderApi(orderPayload);
 });
 
 test.beforeEach( () => {
-    //before test 1, before test 2, before test 3
 });
 
 test('Client App Login', async ({ page }) => {
@@ -38,7 +34,4 @@ test('Client App Login', async ({ page }) => {
     await page.locator('.tagline').waitFor();
     await expect(page.locator('.tagline')).toHaveText('Thank you for Shopping With Us');
     await expect(page.locator('.col-text')).toHaveText(response.orderId);
-    await page.pause();
 });
-
-//Verify that order is showing in the history

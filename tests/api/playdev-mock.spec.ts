@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 
-test.setTimeout(120000);
 test.describe('Verify mock API call', () => {
     test('mocks a fruit and does not call api', async ({ page }) => {
       // Mock the api call before navigating
