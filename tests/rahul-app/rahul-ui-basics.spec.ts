@@ -10,7 +10,7 @@ test.describe('First Playwright Test Describe', async () => {
         const context = await browser.newContext();
         const page = await context.newPage();
         let loginPage = new RahulPage(page);
-        // page.route('**/*.{jpg,png,jpeg}',route=> route.abort());
+        page.route('**/*.{jpg,png,jpeg}',route=> route.abort());
         page.on('request', request => console.log(request.url())); //add this to other tests
         page.on('response', response => console.log(response.url(), response.status()));
         await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
@@ -24,11 +24,11 @@ test.describe('First Playwright Test Describe', async () => {
         //type - fill
         await loginPage.usernameField.fill("rahulshettyacademy");
         await loginPage.loginButton.click();
-        console.log(await loginPage.cardTitles.first().textContent());
-        console.log(await loginPage.cardTitles.nth(1).textContent());
-        const allTitles = await loginPage.cardTitles.allTextContents();
+        // console.log(await loginPage.cardTitles.first().textContent());
+        // console.log(await loginPage.cardTitles.nth(1).textContent());
+        // const allTitles = await loginPage.cardTitles.allTextContents();
 
-        console.log(allTitles);
+        // console.log(allTitles);
     });
 
     test('@Web UI Controls', async ({ page }) => {
@@ -65,14 +65,3 @@ test.describe('First Playwright Test Describe', async () => {
         await page.pause();
     })
 });
-
-/*
-Rahul page that was deprecated
-1. Login
-2. page.waitForLoadState('networkidle');
-3. page.locator(".class a").allTextContents();
-3. page.locator(".class a").nth(0).textContent();
-*/
-
-//Listen for new page to open
-//3 states of promise: pending, rejected, fulfilled
