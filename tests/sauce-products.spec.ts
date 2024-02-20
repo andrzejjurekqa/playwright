@@ -20,13 +20,13 @@ test.describe('Verify products page', () => {
         await productPage.shoppingCart.click();
         await expect(page.locator('.title')).toHaveText('Your Cart');
     });
-    test('Verify products can be sorted', async ({page}) => {
+    test('Verify products can be sorted', async ({ page }) => {
         await productPage.sort('Name (A to Z)');
         await productPage.sort('Name (Z to A)');
         await productPage.sort('Price (high to low)');
         await productPage.sort('Price (low to high)');
     })
-    test('Verify products can be added to the list', async ({page}) =>{
+    test('Verify products can be added to the list', async ({ page }) => {
         await productPage.addToCart('Sauce Labs Backpack');
         await productPage.addToCart('Sauce Labs Bike Light');
         await productPage.shoppingCart.click();

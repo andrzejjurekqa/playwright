@@ -1,6 +1,6 @@
-import { test, expect} from "@playwright/test"
+import { test, expect } from "@playwright/test"
 
-test('Client App Login', async ({page}) => {
+test('Client App Login', async ({ page }) => {
     const productName = 'ZARA COAT 3';
     const products = page.locator('.card-body');
     await page.goto('https://rahulshettyacademy.com/client');
@@ -11,9 +11,9 @@ test('Client App Login', async ({page}) => {
     const titles = await page.locator('.card-body b').allTextContents();
     console.log(titles);
     const count = await products.count();
-    for (let i = 0; i < count; ++i){
+    for (let i = 0; i < count; ++i) {
         if (await products.nth(i).locator('b').textContent() === productName) {
-            await products.nth(i).locator('text= Add To Cart'). click();
+            await products.nth(i).locator('text= Add To Cart').click();
             break;
         };
     };
@@ -62,7 +62,7 @@ test('Client App Login', async ({page}) => {
     };
     await page.locator('.tagline').waitFor();
     await expect(page.locator('.tagline')).toHaveText('Thank you for Shopping With Us');
-    function splitMulti(str, tokens):[] {
+    function splitMulti(str, tokens): [] {
         var tempChar = tokens[0]; // We can use the first token as a temporary join character
         for (var i = 1; i < tokens.length; i++) {
             str = str.split(tokens[i]).join(tempChar);
@@ -73,5 +73,5 @@ test('Client App Login', async ({page}) => {
     const newOrderNumber = splitMulti(orderNumber!, ['|', ' ']).slice(3, 4).toString();//!! IMPORTANT
     console.log(newOrderNumber);
     await expect(page.locator('.col-text')).toHaveText(newOrderNumber!);
-    
+
 });

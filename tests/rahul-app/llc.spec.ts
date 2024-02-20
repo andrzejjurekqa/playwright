@@ -15,9 +15,9 @@ test('Get by Testing', async ({ page }) => {
 
     await page.getByRole('button', { name: 'Submit' }).click();
     await page.getByText('Success! The Form has been submitted successfully!.').isVisible();
-    await page.getByRole('link', { name: 'shop'}).click();
+    await page.getByRole('link', { name: 'shop' }).click();
     await page.locator('app-card').filter({ hasText: 'Nokia Edge' }).getByRole('button').click();
-    await page.getByText('Checkout ( 1 )' ).click();
+    await page.getByText('Checkout ( 1 )').click();
     await page.pause();
 })
 
@@ -33,8 +33,8 @@ test('Calendar test', async ({ page }) => {
     await page.locator('.react-calendar__navigation__label__labelText--from').click();
     await page.getByText(year.toString()).click();
     await page.locator('.react-calendar__year-view__months__month').nth(Number(month) - 1).click();
-    await page.locator('//abbr[text()="' +day+ '"]').click();
-    
+    await page.locator('//abbr[text()="' + day + '"]').click();
+
     // function newDate(number) {
     //     if (number.toString().length == 1){
     //         return number = "0" + number;

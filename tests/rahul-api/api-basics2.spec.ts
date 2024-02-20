@@ -5,7 +5,7 @@ import { expect, test, request } from "@playwright/test";
 
 let webContext;
 
-test.beforeAll(async ({browser}) => {
+test.beforeAll(async ({ browser }) => {
     const context = await browser.newContext();
     const page = await context.newPage();
     await page.goto('https://rahulshettyacademy.com/client');
@@ -13,8 +13,8 @@ test.beforeAll(async ({browser}) => {
     await page.locator('#userPassword').fill('Iamking@000');
     await page.locator("[value='Login']").click();
     await page.waitForLoadState('networkidle');
-    await context.storageState({path: 'state.json'});
-    webContext = await browser.newContext({storageState:'state.json'});
+    await context.storageState({ path: 'state.json' });
+    webContext = await browser.newContext({ storageState: 'state.json' });
 });
 
 

@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test"
 
-test('More Validations', async ({page}) =>{
+test('More Validations', async ({ page }) => {
     await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
     //await page.goto('https://google.com');
     //await page.goBack();

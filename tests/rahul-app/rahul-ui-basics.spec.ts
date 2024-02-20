@@ -5,7 +5,7 @@ test.describe('First Playwright Test Describe', async () => {
 
     // test.beforeEach(async ({ page}) => {});
 
-        //test.use({ browserName: 'webkit'});
+    //test.use({ browserName: 'webkit'});
     test('@Web Browser Context-Validating Error login', async ({ browser }) => {
         const context = await browser.newContext();
         const page = await context.newPage();
@@ -48,15 +48,15 @@ test.describe('First Playwright Test Describe', async () => {
         await expect(documentLink).toHaveAttribute("class", "blinkingText");
     });
 
-    test('Child windows hadl', async ({browser})=> {
+    test('Child windows hadl', async ({ browser }) => {
         const context = await browser.newContext(); //explore more newContext
         const page = await context.newPage();
         let loginPage = new RahulPage(page);
         await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
         const [newPage] = await Promise.all([ //!IMPORTANT fulfil both before continuing
-        context.waitForEvent('page'),
-        await loginPage.documentLink.click() // new page is opened
-        ]) 
+            context.waitForEvent('page'),
+            await loginPage.documentLink.click() // new page is opened
+        ])
         const text = await newPage.locator(".red").textContent();
         const emailArray = text!.split("@"); //!! IMPORTANT
         const domainName = emailArray[1].split(" ")[0];

@@ -27,8 +27,8 @@ test.describe('Verify API call', () => {
     })
     test('Verify delete', async ({ request }) => {
         const response = await request.delete(`${urlBase}users`, {
-            "data" : deletedData
-           })
+            "data": deletedData
+        })
         expect(response.status()).toBe(204);
     })
     test('Verify put', async ({ request }) => {
