@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test('Sec test req intercept', async ({ page }) => {
     //login and reach the page
-    await page.goto(`https://rahulshettyacademy.com/client`);
+    await page.goto('https://rahulshettyacademy.com/client');
     await page.locator('#userEmail').fill('anshika@gmail.com');
     await page.locator('#userPassword').fill('Iamking@000');
     await page.locator("[value='Login']").click();

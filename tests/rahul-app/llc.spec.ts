@@ -17,9 +17,7 @@ test('Get by Testing', async ({ page }) => {
     await page.getByText('Success! The Form has been submitted successfully!.').isVisible();
     await page.getByRole('link', { name: 'shop' }).click();
     await page.locator('app-card').filter({ hasText: 'Nokia Edge' }).getByRole('button').click();
-    await page.getByText('Checkout ( 1 )').click();
-    await page.pause();
-})
+    await page.locator('btn-primary').click();})
 
 test('Calendar test', async ({ page }) => {
     await page.goto('https://rahulshettyacademy.com/seleniumPractise/#/offers');

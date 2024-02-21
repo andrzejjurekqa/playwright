@@ -10,9 +10,9 @@ test.describe('First Playwright Test Describe', async () => {
         const context = await browser.newContext();
         const page = await context.newPage();
         let loginPage = new RahulPage(page);
-        page.route('**/*.{jpg,png,jpeg}',route=> route.abort());
-        page.on('request', request => console.log(request.url())); //add this to other tests
-        page.on('response', response => console.log(response.url(), response.status()));
+        //await page.route('**/*.{jpg,png,jpeg}',route=> route.abort());
+        await page.on('request', request => console.log(request.url())); //add this to other tests
+        await page.on('response', response => console.log(response.url(), response.status()));
         await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
         console.log(await page.title());
         //css 
@@ -34,8 +34,8 @@ test.describe('First Playwright Test Describe', async () => {
     test('@Web UI Controls', async ({ page }) => {
         let loginPage = new RahulPage(page);
         await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
-        const documentLink = page.locator("[href*='documents-request']");
-        const dropdown = page.locator("select.form-control");
+        const documentLink = await page.locator("[href*='documents-request']");
+        const dropdown = await page.locator("select.form-control");
         await dropdown.selectOption("consult");
         await page.locator(".radiotextsty").last().click();
         await page.locator("#okayBtn").click();
@@ -56,7 +56,7 @@ test.describe('First Playwright Test Describe', async () => {
         const [newPage] = await Promise.all([ //!IMPORTANT fulfil both before continuing
             context.waitForEvent('page'),
             await loginPage.documentLink.click() // new page is opened
-        ])
+        ]);
         const text = await newPage.locator(".red").textContent();
         const emailArray = text!.split("@"); //!! IMPORTANT
         const domainName = emailArray[1].split(" ")[0];

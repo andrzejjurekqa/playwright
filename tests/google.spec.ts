@@ -10,6 +10,6 @@ test.describe('Google Suite', () => {
         await page.locator('#APjFqb').fill('playwright');
         await page.keyboard.press('Enter');
         await page.waitForLoadState('networkidle');
-        await expect(page).toHaveTitle('Google');
+        await expect(page).toHaveTitle('playwright - Szukaj w Google');
     });
 });

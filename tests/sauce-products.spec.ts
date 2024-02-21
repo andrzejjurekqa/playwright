@@ -31,7 +31,7 @@ test.describe('Verify products page', () => {
         await productPage.addToCart('Sauce Labs Bike Light');
         await productPage.shoppingCart.click();
         await expect(page.locator('.title')).toHaveText('Your Cart');
-        await expect(productPage.productId).toHaveText('Sauce Labs Backpack');
-        await expect(productPage.productId).toHaveText('Sauce Labs Bike Light');
+        await expect(page.locator('.cart_item_label')).toHaveText('Sauce Labs Backpack');
+        await expect(page.locator('.cart_item_label')).toHaveText('Sauce Labs Bike Light');
     });
 });

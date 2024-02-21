@@ -80,7 +80,7 @@ test.describe('Verify API call', () => {
     })
     test('Verify sending data defined elsewhere', async ({ request }) => {
         const response = await request.put(`${urlBase}users/2`, {
-            "data": data
+            "data": JSON.stringify(data)
         })
         const responseBody = await response.json();
 

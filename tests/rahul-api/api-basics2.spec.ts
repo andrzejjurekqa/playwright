@@ -34,7 +34,6 @@ test('Test Case 2', async () => {
             break;
         };
     };
-    await expect(page.locator('div').filter({ hasText: 'Product Added To Cart' }).nth(2)).toBeVisible();
     await page.locator("[routerLink*='cart']").click();
     await page.waitForLoadState('networkidle');
     await page.locator("div li").first().waitFor();

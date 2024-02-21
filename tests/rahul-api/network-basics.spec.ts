@@ -3,7 +3,7 @@ import { APICalls } from "../../pages/rahul-api.page";
 const loginPayload = { userEmail: "anshika@gmail.com", userPassword: "Iamking@000" };
 const orderPayload = { orders: [{ country: "Barbados", productOrderedId: "6581ca399fd99c85e8ee7f45" }] };
 const fakeResponse = { data: [], message: "No Orders" };
-const baseUrl = 'https://rahulshettyacademy.com';
+const baseUrl = 'https://rahulshettyacademy.com/';
 
 let response;
 
