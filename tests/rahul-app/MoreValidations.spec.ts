@@ -31,5 +31,5 @@ test('Screenshots', async ({ page }) => {
 
 test('Visual comparison', async ({ page }) => {
     await page.goto('https://flightaware.com/');
-    expect(await page.locator('#home-main-messaging').screenshot()).toMatchSnapshot('landing.png');
+    expect(await page.locator('.faLogo').screenshot()).toMatchSnapshot('landing.png');
 });
