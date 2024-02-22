@@ -1,67 +1,49 @@
 import { test, expect } from '@playwright/test';
-import { RahulPage } from '../../pages/rahul-login.page';
+import { RahulLoginPractice } from '../../pages/rahul-loginprac.page';
 
 test.describe('First Playwright Test Describe', async () => {
 
-    // test.beforeEach(async ({ page}) => {});
-
     //test.use({ browserName: 'webkit'});
-    test('@Web Browser Context-Validating Error login', async ({ browser }) => {
-        const context = await browser.newContext();
-        const page = await context.newPage();
-        let loginPage = new RahulPage(page);
-        //await page.route('**/*.{jpg,png,jpeg}',route=> route.abort());
+    test('@Web Browser Context-Validating Error login', async ({ page }) => {
+        const loginPage = new RahulLoginPractice(page);
+        await loginPage.goToLoginPrac();
+        await page.route('**/*.{jpg,png,jpeg}',route=> route.abort());
         await page.on('request', request => console.log(request.url())); //add this to other tests
         await page.on('response', response => console.log(response.url(), response.status()));
-        await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
         console.log(await page.title());
-        //css 
-        await loginPage.usernameField.fill("rahulshetty");
-        await loginPage.passwordField.fill("learning");
-        await loginPage.loginButton.click();
-        console.log(await page.locator("[style*='block']").textContent());
-        await expect(page.locator("[style*='block']")).toContainText('Incorrect');
-        //type - fill
+        await loginPage.pracLoginInval();
+        await loginPage.usernameField.fill("");
         await loginPage.usernameField.fill("rahulshettyacademy");
         await loginPage.loginButton.click();
-        // console.log(await loginPage.cardTitles.first().textContent());
-        // console.log(await loginPage.cardTitles.nth(1).textContent());
-        // const allTitles = await loginPage.cardTitles.allTextContents();
-
-        // console.log(allTitles);
     });
 
     test('@Web UI Controls', async ({ page }) => {
-        let loginPage = new RahulPage(page);
-        await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
-        const documentLink = await page.locator("[href*='documents-request']");
-        const dropdown = await page.locator("select.form-control");
-        await dropdown.selectOption("consult");
-        await page.locator(".radiotextsty").last().click();
-        await page.locator("#okayBtn").click();
-        console.log(await page.locator(".radiotextsty").last().isChecked());
-        await expect(page.locator(".radiotextsty").last()).toBeChecked();
-        await page.locator("#terms").click();
-        await expect(page.locator("#terms")).toBeChecked();
-        await page.locator("#terms").uncheck();
-        expect(await page.locator("#terms").isChecked()).toBeFalsy();
-        await expect(documentLink).toHaveAttribute("class", "blinkingText");
+        let loginPage = new RahulLoginPractice(page);
+        await loginPage.goToLoginPrac();
+        await loginPage.dropdown.selectOption("consult");
+        await loginPage.radioButton.last().click();
+        await loginPage.okPrompt.click();
+        await expect(loginPage.radioButton.last()).toBeChecked();
+        await loginPage.terms.click();
+        await expect(loginPage.terms).toBeChecked();
+        await loginPage.terms.uncheck();
+        expect(await loginPage.terms.isChecked()).toBeFalsy();
+        await expect(loginPage.documentLink).toHaveAttribute("class", "blinkingText");
     });
 
     test('Child windows hadl', async ({ browser }) => {
         const context = await browser.newContext(); //explore more newContext
         const page = await context.newPage();
-        let loginPage = new RahulPage(page);
         await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+        const documentLink = page.locator("[href*='documents-request']");
         const [newPage] = await Promise.all([ //!IMPORTANT fulfil both before continuing
             context.waitForEvent('page'),
-            await loginPage.documentLink.click() // new page is opened
-        ]);
+            await documentLink.click() // new page is opened
+        ])
         const text = await newPage.locator(".red").textContent();
         const emailArray = text!.split("@"); //!! IMPORTANT
         const domainName = emailArray[1].split(" ")[0];
-        console.log(domainName);
-        await loginPage.usernameField.fill(domainName);
+        await page.locator("#username").fill(domainName);
         await page.pause();
     })
 });
