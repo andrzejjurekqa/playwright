@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test('Sec test req intercept', async ({ page }) => {
+test('@API Sec test req intercept', async ({ page }) => {
     //login and reach the page
     await page.goto('https://rahulshettyacademy.com/client');
     await page.locator('#userEmail').fill('anshika@gmail.com');

@@ -19,7 +19,7 @@ test.beforeAll(async ({ browser }) => {
 
 
 
-test('Test Case 2', async () => {
+test('@API Test Case 2', async () => {
     const page = await webContext.newPage();
     await page.goto('https://rahulshettyacademy.com/client');
 

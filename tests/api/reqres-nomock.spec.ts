@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { data } from '../../test-data/reqres-post.json';
 import * as deletedData from '../../test-data/reqres-delete.json';
 
-test.describe('Verify API call', () => {
+test.describe('@API Verify API call', () => {
 
     const urlBase = 'https://reqres.in/api/';
     test('Verify get', async ({ request }) => {

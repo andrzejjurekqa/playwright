@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import * as fakeResponse from '../../test-data/reqres-post.json'
 
-test.describe('Verify mock API call', () => {
+test.describe('@API Verify mock API call', () => {
     test('Verify mocked post', async ({ page }) => {
         await page.route('https://reqres.in/api/users', async route => {
             const response = await page.request.fetch(route.request());

@@ -17,7 +17,7 @@ test.beforeAll(async () => {
 test.beforeEach(() => {
 });
 
-test('Client App Login', async ({ page }) => {
+test('@API Client App Login', async ({ page }) => {
     page.addInitScript(value => {
         window.localStorage.setItem('token', value);
     }, response.token);
