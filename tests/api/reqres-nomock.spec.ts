@@ -14,11 +14,8 @@ test.describe('@API Verify API call', () => {
         expect(response.status()).toBe(200);
     })
     test('Verify post', async ({ request }) => {
-        const response = await request.post(`${urlBase}users`, {
-            "data": {
-                'name': 'Jebediah', 'job': 'leader'
-            }
-        })
+        const response = await request.post(`${urlBase}users`,
+            {data: {'name': 'Jebediah', 'job': 'leader'}})
         const responseBody = await response.json();
 
         expect(responseBody.name).toBe('Jebediah');
