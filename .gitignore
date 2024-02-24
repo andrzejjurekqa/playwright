@@ -127,6 +127,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+state.json
+
 
 /test-results/
 /playwright-report/
@@ -136,4 +138,3 @@ dist
 allure-report
 allure-results
 screenshot.png
-state.json
