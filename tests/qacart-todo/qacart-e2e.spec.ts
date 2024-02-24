@@ -24,6 +24,9 @@ test.describe('E2E', () => {
         await expect(page.getByRole('checkbox')).toBeChecked();
         await page.getByTestId('delete').click();
         await expect(page.getByTestId('todo-item')).toHaveCount(0);
+
+        await page.getByRole('button').filter({ hasText: "Logout" }).click();
+        await expect(page.locator('.header')).toHaveText('Login to Application');
     });
 });
 

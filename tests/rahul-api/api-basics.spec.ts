@@ -12,9 +12,6 @@ test.beforeAll(async () => {
     response = await newAPICalls.orderApi(orderPayload);
 });
 
-test.beforeEach(() => {
-});
-
 test('@API Client App Login', async ({ page }) => {
     page.addInitScript(value => {
         window.localStorage.setItem('token', value);

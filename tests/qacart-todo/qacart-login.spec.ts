@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test.describe('Login Page Tests', () => {
     test.beforeEach('go to page', async ({page}) => {
         await page.goto('https://todo.qacart.com/');
-        expect(await page.locator('.header')).toHaveText('Login to Application');
+        await expect(page.locator('.header')).toHaveText('Login to Application');
     });
     test('Invalid Login', async ({ page }) => {
         await page.locator('#email').fill('invalidemail@gmail.com');
