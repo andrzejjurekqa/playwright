@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/login.page';
+import { LoginPage } from '../../pages/login.page';
 
 test.setTimeout(120000);
 test.describe('Verify the Login screen', () => {
