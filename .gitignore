@@ -132,6 +132,8 @@ dist
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-/playwright/allure-report
+
+allure-report
+allure-results
 screenshot.png
 state.json
