@@ -1,31 +1,41 @@
-import { expect, request } from "@playwright/test";
+import { APIRequest, BrowserContext, Page, request } from "@playwright/test";
 import { faker } from "@faker-js/faker"
 
 export class APIqaCart {
-    apiContext: any;
-    payload: any;
+    page: Page;
+    request: any;
+    context: BrowserContext;
 
-    constructor(apiContext, payload) {
-        this.apiContext = apiContext;
-        this.payload = payload;
-    };
+    constructor(request, context) {
+        this.request = request;
+        this.context = context;
+    }
 
-    async loginApi() {
-        const logResponse = await this.apiContext.post('https://todo.qacart.com/api/v1/users/login', {
-            data: this.payload
+    async loginApi(loginPayload) {
+        const logResponse = await this.request.post('https://todo.qacart.com/api/v1/users/login', {
+            data: loginPayload
         });
         const loginResponseBody = await logResponse.json();
-        console.log(loginResponseBody);
-        const token = loginResponseBody.access_token;
-        return token;
-    }
-    async registrationApi() {
-        const regResponse = await this.apiContext.post('https://todo.qacart.com/api/v1/users/register', {
-            data: this.payload
-        });
-        const regiResponseBody = await regResponse.json();
-        console.log(regiResponseBody);
-        const token = regiResponseBody.access_token;
-        return token;
+        const token = await loginResponseBody.access_token;
+        const userID = await loginResponseBody.userID;
+        const firstName = await loginResponseBody.firstName;
+        await this.context.addCookies([
+            {
+                name: "access_token",
+                value: token,
+                url: "https://todo.qacart.com/",
+            },
+            {
+                name: "userID",
+                value: userID,
+                url: "https://todo.qacart.com/",
+            },
+            {
+                name: "firstName",
+                value: firstName,
+                url: "https://todo.qacart.com/",
+            },
+        ]);
+        return loginResponseBody;
     }
 }

@@ -1,44 +1,48 @@
 import { test, expect, request } from "@playwright/test";
+import { APIqaCart } from "../../pages/qacart-api.page";
 const logPayload = { email: "newemail3@email.com", password: "Password1234" };
-const taskPayload = { item: "wert", isCompleted: false };
+const taskPayload = { item: "To Do newemail3@email.com", isCompleted: false };
+const taskPutLoad = { item: "To Do newemail3@email.com", isCompleted: true };
+const taskDelLoad = { isCompleted: true, item: "To Do newemail3@email.com", __v: 0 };
+
 
 test('Log in and create a task', async ({ page, request, context }) => {
     
-    const response = await request.post('https://todo.qacart.com/api/v1/users/login',{ 
-        data: { email: "newemail3@email.com", password: "Password1234" } }
-    );
-    const responseBody = await response.json();
-    const token = await responseBody.access_token;
-    const userID = await responseBody.userID;
-    const firstName = await responseBody.firstName;
+    const qacart = new APIqaCart(request, context);
+    const response = await qacart.loginApi(logPayload);
+    const token = await response.access_token;
+    await page.goto('https://todo.qacart.com/todo');
+    await expect(page.locator('.sc-dIouRR')).toContainText('Good morning New Nam');
 
-    await context.addCookies([
-        {
-            name: "access_token",
-            value: token,
-            url: "https://todo.qacart.com/",
-        },
-        {
-            name: "userID",
-            value: userID,
-            url: "https://todo.qacart.com/",
-        },
-        {
-            name: "firstName",
-            value: firstName,
-            url: "https://todo.qacart.com/",
-        },
-])
-    let userName = 'TestName' + Math.floor(Math.random() * 1000);
-    await page.goto('https://todo.qacart.com/todo')
-    await page.getByTestId('add').click();
-    await expect(page.getByTestId('header')).toHaveText('Create a new Todo');
-    await page.locator('input').fill('To do' + userName);
-    await page.getByTestId('submit-newTask').click();
-    await expect(page.locator('.sc-evZas').first()).toHaveText('To do' + userName);
+    const taskResponse = await request.post('https://todo.qacart.com/api/v1/tasks', {
+        data: taskPayload,
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    const taskResponseBody = await taskResponse.json();
+    let taskID = await taskResponseBody._id;
+    await page.goto('https://todo.qacart.com/todo');
+    await expect(page.getByTestId('todo-text').first()).toHaveText('To Do newemail3@email.com');
+    
 
-    await page.getByRole('checkbox').first().click();
-    await expect(page.getByRole('checkbox').first()).toBeChecked();
-    await page.getByTestId('delete').first().click();
-    await expect(page.getByTestId('todo-item')).toHaveCount(0);
+    const taskPutResponse = await request.put(`https://todo.qacart.com/api/v1/tasks/${taskID}`, {
+        data: { item: "To Do newemail3@email.com", isCompleted: true },
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    const taskPutResponseBody = await taskPutResponse.json();
+    await page.goto('https://todo.qacart.com/todo');
+    await expect(page.getByTestId('complete-task').first()).toBeChecked();
+
+    const taskDelResp = await request.delete(`https://todo.qacart.com/api/v1/tasks/${taskID}`, {
+        data: { item: "To Do newemail3@email.com", isCompleted: true },
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    const taskDelRespBody = await taskDelResp.json();
+    await page.goto('https://todo.qacart.com/todo');
+    await expect(page.getByTestId('todo-text')).toHaveCount(0);
+
+    const getResponse = await request.get('https://todo.qacart.com/api/v1/tasks', {
+            headers: { Authorization: `Bearer ${token}` },});
+    const getResponseBody = await getResponse.json();
+    const tasks = await getResponseBody.tasks;
+    await (expect(tasks)).toStrictEqual([]);
 });
