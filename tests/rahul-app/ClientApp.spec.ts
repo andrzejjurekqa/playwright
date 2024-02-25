@@ -26,17 +26,15 @@ for (const data of dataSet) {
         await poManager.checkoutPage.cardHolder.fill(data.cardHolder);
         await poManager.checkoutPage.countryPicker.pressSequentially(data.country);
         await poManager.checkoutPage.dropdown.waitFor();
-        poManager.checkoutPage.filterThroughCountries(data.country);
+        await poManager.checkoutPage.filterThroughCountries(data.country);
         await expect(poManager.checkoutPage.loggedUser).toHaveText('anshika@gmail.com');
         await poManager.checkoutPage.placeOrder.click();
         await expect(page.locator('div').filter({ hasText: 'Order Placed Successfully' }).nth(2)).toBeVisible();
         await expect(page.locator('.hero-primary')).toHaveText(' Thankyou for the order. ');
         const orderNumber = await page.locator('.em-spacer-1 .ng-star-inserted').textContent();
-        console.log(orderNumber);
         await page.locator("button[routerlink*='myorders']").click();
         await page.locator("tbody").waitFor();
         const rows = await page.locator("tbody tr");
-
 
         for (let i = 0; i < await rows.count(); ++i) {
             const rowOrderId = await rows.nth(i).locator("th").textContent();
@@ -56,7 +54,6 @@ for (const data of dataSet) {
             return str;
         };
         const newOrderNumber = splitMulti(orderNumber!, ['|', ' ']).slice(3, 4).toString();//!! IMPORTANT
-        console.log(newOrderNumber);
         await expect(page.locator('.col-text')).toHaveText(newOrderNumber!);
     });
 }

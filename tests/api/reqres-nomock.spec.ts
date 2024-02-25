@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { data } from '../../test-data/reqres-post.json';
+import * as data from '../../test-data/reqres-put.json';
 import * as deletedData from '../../test-data/reqres-delete.json';
 
 test.describe('@API Verify API call', () => {
@@ -14,11 +14,8 @@ test.describe('@API Verify API call', () => {
         expect(response.status()).toBe(200);
     })
     test('Verify post', async ({ request }) => {
-        const response = await request.post(`${urlBase}users`, {
-            "data": {
-                'name': 'Jebediah', 'job': 'leader'
-            }
-        })
+        const response = await request.post(`${urlBase}users`,
+            { data: { 'name': 'Jebediah', 'job': 'leader' } })
         const responseBody = await response.json();
 
         expect(responseBody.name).toBe('Jebediah');
@@ -33,9 +30,7 @@ test.describe('@API Verify API call', () => {
     })
     test('Verify put', async ({ request }) => {
         const response = await request.put(`${urlBase}users/2`, {
-            "data": {
-                'name': 'Jebediah', 'job': 'leader'
-            }
+            "data": { 'name': 'Jebediah', 'job': 'leader' }
         })
         const responseBody = await response.json();
 
@@ -80,7 +75,7 @@ test.describe('@API Verify API call', () => {
     })
     test('Verify sending data defined elsewhere', async ({ request }) => {
         const response = await request.put(`${urlBase}users/2`, {
-            "data": JSON.stringify(data)
+            "data": data
         })
         const responseBody = await response.json();
 

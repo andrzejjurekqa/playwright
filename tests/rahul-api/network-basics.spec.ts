@@ -36,6 +36,4 @@ test('@API Client App Login', async ({ page }) => {
         });
     await page.locator("button[routerlink*='myorders']").click();
     await page.waitForResponse(`${baseUrl}api/ecom/order/get-orders-for-customer/*`);
-    console.log(await page.locator(".mt-4").textContent());
-
 });

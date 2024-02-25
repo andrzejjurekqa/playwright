@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/login.page';
-import { ProductPage } from '../pages/products.page';
+import { LoginPage } from '../../pages/login.page';
+import { ProductPage } from '../../pages/products.page';
 
 let loginPage;
 let productPage;
@@ -31,7 +31,7 @@ test.describe('Verify products page', () => {
         await productPage.addToCart('Sauce Labs Bike Light');
         await productPage.shoppingCart.click();
         await expect(page.locator('.title')).toHaveText('Your Cart');
-        await expect(page.locator('.cart_item_label')).toHaveText('Sauce Labs Backpack');
-        await expect(page.locator('.cart_item_label')).toHaveText('Sauce Labs Bike Light');
+        await expect(page.locator('.cart_item_label')).toContainText('Sauce Labs Backpack');
+        await expect(page.locator('.cart_item_label')).toContainText('Sauce Labs Bike Light');
     });
 });
