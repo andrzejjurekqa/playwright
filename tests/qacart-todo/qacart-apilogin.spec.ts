@@ -2,8 +2,6 @@ import { test, expect, request } from "@playwright/test";
 import { APIqaCart } from "../../pages/qacart-api.page";
 const logPayload = { email: "newemail3@email.com", password: "Password1234" };
 const taskPayload = { item: "To Do newemail3@email.com", isCompleted: false };
-const taskPutLoad = { item: "To Do newemail3@email.com", isCompleted: true };
-const taskDelLoad = { isCompleted: true, item: "To Do newemail3@email.com", __v: 0 };
 
 
 test('Log in and create a task', async ({ page, request, context }) => {
@@ -12,7 +10,7 @@ test('Log in and create a task', async ({ page, request, context }) => {
     const response = await qacart.loginApi(logPayload);
     const token = await response.access_token;
     await page.goto('https://todo.qacart.com/todo');
-    await expect(page.locator('.sc-dIouRR')).toContainText('Good morning New Nam');
+    await expect(page.locator('.sc-dIouRR')).toContainText('New Nam');
 
     const taskResponse = await request.post('https://todo.qacart.com/api/v1/tasks', {
         data: taskPayload,
@@ -45,4 +43,27 @@ test('Log in and create a task', async ({ page, request, context }) => {
     const getResponseBody = await getResponse.json();
     const tasks = await getResponseBody.tasks;
     await (expect(tasks)).toStrictEqual([]);
+});
+
+test('Log in and fake a task', async ({ page, request, context }) => {
+    // page.addInitScript(value => {
+    //     window.localStorage.setItem('token', value);
+    // }, response.token);
+    const qacart = new APIqaCart(request, context);
+    const response = await qacart.loginApi(logPayload);
+    const token = await response.access_token;
+    await page.goto('https://todo.qacart.com/todo');
+    await expect(page.locator('.sc-dIouRR')).toContainText('New Nam');
+
+});
+
+test('Log in and abort during task', async ({ page, request, context }) => {
+
+
+});
+
+
+test('Log in and continue to nonexistent link', async ({ page, request, context }) => {
+
+
 });

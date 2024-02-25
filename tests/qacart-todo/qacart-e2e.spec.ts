@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { beforeEach } from "node:test";
 
 test.describe('E2E', () => {
-    test('Valid registration', async ({ page }) => {
+    test('Registration, to do, check, delete, logout', async ({ page }) => {
         await page.goto('https://todo.qacart.com/signup')
         await expect(page.locator('.ktReoZ')).toHaveText('Register to Application');
         let userName = 'TestName' + Math.floor(Math.random() * 1000);
