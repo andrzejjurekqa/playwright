@@ -10,7 +10,6 @@ test.describe('First Playwright Test Describe', async () => {
         await page.route('**/*.{jpg,png,jpeg}',route=> route.abort());
         await page.on('request', request => console.log(request.url())); //add this to other tests
         await page.on('response', response => console.log(response.url(), response.status()));
-        console.log(await page.title());
         await loginPage.pracLoginInval();
         await loginPage.usernameField.fill("");
         await loginPage.usernameField.fill("rahulshettyacademy");

@@ -1,17 +1,20 @@
-import { test, expect, request } from "@playwright/test";
+import { test, expect, Browser } from "@playwright/test";
 import { APIqaCart } from "../../pages/qacart-api.page";
 const logPayload = { email: "newemail3@email.com", password: "Password1234" };
 const taskPayload = { item: "To Do newemail3@email.com", isCompleted: false };
+import * as fakeResponse from "../../test-data/qacart-response.json";
 
+let token;
 
-test('Log in and create a task', async ({ page, request, context }) => {
-    
+test.beforeEach(async ({ page, request, context }) => {
     const qacart = new APIqaCart(request, context);
     const response = await qacart.loginApi(logPayload);
-    const token = await response.access_token;
-    await page.goto('https://todo.qacart.com/todo');
-    await expect(page.locator('.sc-dIouRR')).toContainText('New Nam');
+    token = await response.access_token;
+    await page.goto('https://todo.qacart.com/todo')
+});
 
+test('Log in and create a task', async ({ page, request }) => {
+    
     const taskResponse = await request.post('https://todo.qacart.com/api/v1/tasks', {
         data: taskPayload,
         headers: { Authorization: `Bearer ${token}` },
@@ -45,25 +48,30 @@ test('Log in and create a task', async ({ page, request, context }) => {
     await (expect(tasks)).toStrictEqual([]);
 });
 
-test('Log in and fake a task', async ({ page, request, context }) => {
-    // page.addInitScript(value => {
-    //     window.localStorage.setItem('token', value);
-    // }, response.token);
-    const qacart = new APIqaCart(request, context);
-    const response = await qacart.loginApi(logPayload);
-    const token = await response.access_token;
-    await page.goto('https://todo.qacart.com/todo');
-    await expect(page.locator('.sc-dIouRR')).toContainText('New Nam');
+test('Log in and fake a task', async ({ page }) => {
+    await page.route('https://todo.qacart.com/api/v1/tasks', async route => {
+        const response = await page.request.fetch(route.request());
+        let body = JSON.stringify(fakeResponse);
+        await route.fulfill({
+            status: 201,
+            contentType: 'application/json',
+            response,
+            body,
+            headers: { Authorization: `Bearer ${token}` },
+        });
+    });
+    await page.goto('https://todo.qacart.com/todo')
+    await expect(page.getByText('To Do newemail3@email.com')).toBeVisible();
+});
+
+test('Log in and abort during task', async ({ page }) => {
+    await page.route('**/*.{jpg,png,jpeg}', route => route.abort());
+    await page.pause();
 
 });
 
-test('Log in and abort during task', async ({ page, request, context }) => {
 
-
-});
-
-
-test('Log in and continue to nonexistent link', async ({ page, request, context }) => {
-
-
+test('Log in and continue to a link', async ({ page }) => {
+    await page.route('https://todo.qacart.com/', route => route.continue({
+        url: 'https://todo.qacart.com/todo'}))
 });

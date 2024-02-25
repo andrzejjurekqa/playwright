@@ -15,7 +15,6 @@ test.describe('@API Verify mock API call', () => {
         });
         await page.goto('https://reqres.in/api/users');
         await expect(page.getByText('Morpheus')).toBeVisible();
-        await page.pause();
         await page.on('request', request => console.log(request.url()));
         page.on('response', response => console.log(response.url(), response.status()));
     });

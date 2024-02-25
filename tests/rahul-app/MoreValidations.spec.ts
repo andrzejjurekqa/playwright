@@ -16,8 +16,6 @@ test('More Validations', async ({ page }) => {
     const frame = await page.frameLocator('#courses-iframe');
     await frame.locator('li a[href*="lifetime-access"]:visible').click();
     const string1 = await frame.locator('.text h2').textContent();
-
-    console.log(string1!.split(' ')[1]);
 });
 
 test('Screenshots', async ({ page }) => {
