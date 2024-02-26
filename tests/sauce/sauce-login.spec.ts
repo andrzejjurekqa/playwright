@@ -6,7 +6,6 @@ test.describe('Verify the Login screen', () => {
     test.beforeEach(async ({ page }) => {
         loginPage = new LoginPage(page);
         await page.goto('https://www.saucedemo.com');
-        await page.waitForLoadState('networkidle');
     })
 
     test('Verify the login page', async ({ page }) => {
@@ -15,7 +14,7 @@ test.describe('Verify the Login screen', () => {
         await expect(loginPage.passwordField).toBeVisible();
         await expect(loginPage.loginButton).toBeVisible();
     });
-    test('Incorrect login', async ({ page }) => {
+    test('Incorrect login', async () => {
         await loginPage.login('fake', 'password');
         await expect(loginPage.errorMessage).toHaveText(/Username and password do not match any user in this service/);
     });

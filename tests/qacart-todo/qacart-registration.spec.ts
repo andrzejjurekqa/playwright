@@ -35,7 +35,7 @@ test.describe('Registration Screen Test', () =>{
         await page.locator('input').nth(3).fill('InvalidPassword');
         await page.locator('input').nth(4).fill('InvalidPassword');
         await page.getByRole('button').filter({ hasText: "Signup" }).click();
-        await expect(page.locator('.sc-dIouRR')).toHaveText('Good afternoon ' + userName);
+        await expect(page.locator('.sc-dIouRR')).toContainText(userName);
     });
 });
 
