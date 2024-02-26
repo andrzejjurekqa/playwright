@@ -24,9 +24,7 @@ for (const data of dataSet) {
         await poManager.checkoutPage.expYear.selectOption(data.expYear);
         await poManager.checkoutPage.cvc.fill(data.cvc);
         await poManager.checkoutPage.cardHolder.fill(data.cardHolder);
-        await poManager.checkoutPage.countryPicker.pressSequentially(data.country);
-        await poManager.checkoutPage.dropdown.waitFor();
-        await poManager.checkoutPage.filterThroughCountries(data.country);
+        await poManager.checkoutPage.filterThroughCountries('Ind', 'India');
         await expect(poManager.checkoutPage.loggedUser).toHaveText('anshika@gmail.com');
         await poManager.checkoutPage.placeOrder.click();
         await expect(page.locator('div').filter({ hasText: 'Order Placed Successfully' }).nth(2)).toBeVisible();

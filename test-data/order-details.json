@@ -3,18 +3,16 @@
     "productName": "ZARA COAT 3",
     "cardnumber": "4542 9931 1234 2293",
     "expMonth": "07",
-    "epxYear": "30",
+    "expYear": "30",
     "cvc": "121",
-    "cardHolder": "Andrzej Jurek",
-    "country": "Poland"
+    "cardHolder": "Andrzej Jurek"
     },
     {
     "productName": "ADIDAS ORIGINAL",
     "cardnumber": "4542 9931 1234 4393",
     "expMonth": "01",
-    "epxYear": "19",
+    "expYear": "19",
     "cvc": "123",
-    "cardHolder": "Andrzej Burek",
-    "country": "India"
+    "cardHolder": "Andrzej Burek"
     }
 ]

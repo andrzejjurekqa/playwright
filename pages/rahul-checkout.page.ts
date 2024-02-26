@@ -21,15 +21,19 @@ export class RahulCheckoutPage {
         this.cardHolder = page.locator('input[type="text"]').nth(2);
         this.countryPicker = page.locator("[placeholder*='Country']");
         this.loggedUser = page.locator('.user__name [type="text"]').first();
-        this.placeOrder = page.locator("text=PLACE ORDER");
+        this.placeOrder = page.getByText('Place Order');
         this.dropdown = page.locator('.ta-results');
     }
-    async filterThroughCountries(country) {
-        for (let i = 0; i < await this.dropdown.locator('button').count(); ++i) {
-            if (await this.dropdown.locator('button').nth(i).textContent() === country) {
-                await this.dropdown.locator('button').nth(i).click();
+    async filterThroughCountries(countryCode, countryName) {
+        await this.countryPicker.pressSequentially(countryCode);
+        await this.dropdown.waitFor();
+        const optionsCount = await this.dropdown.locator("button").count();
+        for (let i = 0; i < optionsCount; ++i) {
+            const text = await this.dropdown.locator("button").nth(i).textContent();
+            if (text!.trim() === countryName) {
+                await this.dropdown.locator("button").nth(i).click();
                 break;
-            };
-        };
+            }
+        }
     }
 }
