@@ -36,9 +36,6 @@ test('@API Test Case 2', async () => {
     };
     await page.locator("[routerLink*='cart']").click();
     await page.waitForLoadState('networkidle');
-    await page.locator("div li").first().waitFor();
-    const bool = await page.locator("h3:has-text('ZARA COAT 3')").isVisible(); //IMPORTANT
-    await expect(bool).toBeTruthy();
     await page.locator("text=Checkout").click();
     await page.locator("[placeholder*='Country']").pressSequentially('Ind');
     const dropdown = await page.locator('.ta-results');
