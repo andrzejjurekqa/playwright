@@ -17,7 +17,6 @@ export class RahulDashboardPage {
     }
     async addToCart(productName: string): Promise<void> {
         const titles = await this.cardTitles.allTextContents();
-        console.log(titles);
         const count = await this.productId.count();
         for (let i = 0; i < count; ++i) {
             if (await this.productId.nth(i).locator("b").textContent() === productName) {

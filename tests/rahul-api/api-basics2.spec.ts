@@ -84,7 +84,6 @@ test('@API Test Case 2', async () => {
         return str;
     };
     const newOrderNumber = splitMulti(orderNumber!, ['|', ' ']).slice(3, 4).toString();//!! IMPORTANT
-    console.log(newOrderNumber);
     await expect(page.locator('.col-text')).toHaveText(newOrderNumber!);
 
 });

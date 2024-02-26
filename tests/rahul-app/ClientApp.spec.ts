@@ -29,7 +29,7 @@ for (const data of dataSet) {
         await poManager.checkoutPage.placeOrder.click();
         await expect(page.locator('div').filter({ hasText: 'Order Placed Successfully' }).nth(2)).toBeVisible();
         await expect(page.locator('.hero-primary')).toHaveText(' Thankyou for the order. ');
-        const orderNumber = await page.locator('.em-spacer-1 .ng-star-inserted').textContent();
+        const orderNumber = await page.locator('.em-spacer-1 .ng-star-inserted').first().textContent();
         await page.locator("button[routerlink*='myorders']").click();
         await page.locator("tbody").waitFor();
         const rows = await page.locator("tbody tr");
