@@ -24,7 +24,7 @@ test.describe('Verify products page', () => {
         await productPage.sort('Price (high to low)');
         await productPage.sort('Price (low to high)');
     })
-    test.only('Verify products can be added to the list', async ({ page }) => {
+    test('Verify products can be added to the list', async ({ page }) => {
         await productPage.addToCart('Sauce Labs Backpack');
         await productPage.shoppingCart.click();
         await expect(page.locator('.title')).toHaveText('Your Cart');
