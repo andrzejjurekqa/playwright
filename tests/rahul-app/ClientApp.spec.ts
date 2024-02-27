@@ -5,7 +5,7 @@ const dataSet = JSON.parse(JSON.stringify(orderData));
 
 for (const data of dataSet) {
 
-    test(`Client App Login for ${data.cardnumber}`, async ({ page }) => {
+    test(`Client App Login for ${data.cardHolder}`, async ({ page }) => {
         const poManager = new POManager(page);
         await poManager.getLoginPage();
         await poManager.loginPage.validCredentials();
