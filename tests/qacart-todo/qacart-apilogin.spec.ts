@@ -1,6 +1,6 @@
 import { test, expect, Browser } from "@playwright/test";
 import { APIqaCart } from "../../pages/qacart-api.page";
-const logPayload = { email: "newemail3@email.com", password: "Password1234" };
+const logPayload = { email: "newemail123@pl.pl", password: "Password1234" };
 const taskPayload = { item: "To Do newemail3@email.com", isCompleted: false };
 import * as fakeResponse from "../../test-data/qacart-response.json";
 
@@ -46,6 +46,13 @@ test('Log in and create a task', async ({ page, request }) => {
     const getResponseBody = await getResponse.json();
     const tasks = await getResponseBody.tasks;
     await (expect(tasks)).toStrictEqual([]);
+    
+    // const session = await page.context().newCDPSession(page);
+    // await session.send("Performance.enable")
+    // //To tell the CDPsession to record performance metrics.
+    // console.log("=============CDP Performance Metrics===============")
+    // let performanceMetrics = await session.send("Performance.getMetrics")
+    // console.log(performanceMetrics.metrics)
 });
 
 test('Log in and fake a task', async ({ page }) => {

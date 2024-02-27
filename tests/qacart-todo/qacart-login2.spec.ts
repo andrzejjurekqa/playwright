@@ -1,9 +1,9 @@
 import { expect, test } from "@playwright/test";
 import { faker } from "@faker-js/faker";
 
-let loginData = { email: "newemail3@email.com", password: "Password1234" };
+let loginData = { email: "newemail123@pl.pl", password: "Password1234" };
 let registrationData = { email: Math.floor(Math.random() * 10000) + '@todotest.com', password: "Password1234", firstName: "Dandrzej", lastName: "Durek" };
-let registrationInvData = { email: 'newemail3@email.com', password: "Password1234", firstName: "Dandrzej", lastName: "Durek" };
+let registrationInvData = { email: 'newemail123@pl.pl', password: "Password1234", firstName: "Dandrzej", lastName: "Durek" };
 let invLoginData = { email: "newemail3@email.com", password: "asdasdasdas" };
 let baseUrl = 'https://todo.qacart.com/';
 

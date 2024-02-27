@@ -14,4 +14,5 @@ test('Storage State for To Do', async ({ request, browser }) => {
     let webContext = await browser.newContext({ storageState : 'state.json'});
     let page2 = await webContext.newPage();
     await page2.goto('https://todo.qacart.com/todo');
+    await expect(page2.getByTestId('welcome')).toContainText('Dandrzej');
 });
