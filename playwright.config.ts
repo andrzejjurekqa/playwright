@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices, PlaywrightTestConfig } from '@playwright/test';
 import { testPlanFilter } from "allure-playwright/dist/testplan";
 
 
@@ -8,6 +8,9 @@ import { testPlanFilter } from "allure-playwright/dist/testplan";
  */
 // require('dotenv').config();
 
+interface TestConfig extends PlaywrightTestConfig {
+  use: {},
+}
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -20,11 +23,11 @@ export default defineConfig({
   /* timeout settings: */
   timeout: 30 * 1000,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 1,
+  retries: process.env.CI ? 1 : 2,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : 3,
+  workers: process.env.CI ? 2 : 3,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: /*'html',*/[["line"], ["allure-playwright"]],
+  reporter: process.env.CI ? 'html' : [["line"], ["allure-playwright"]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   grep: testPlanFilter(),
   use: {

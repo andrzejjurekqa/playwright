@@ -7,7 +7,7 @@ export class RahulCartPage {
     cartItem: Locator;
 
     constructor(page) {
-        this.checkoutButton = page.getByRole('button', { name: "Checkout" });
+        this.checkoutButton = page.getByRole('button', { hasText: "Checkout" });
         this.cartItem = page.locator(".ng-star-inserted");
     }
 }

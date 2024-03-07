@@ -25,7 +25,7 @@ test('Test Reqres post api', async ({ request, playwright }) => {
 
 test('Reqres mock api', async ({ page }) => {
     await page.route('https://reqres.in/api/users', async route => {
-        const response = await page.request.fetch(route.request());
+        await page.request.fetch(route.request());
         await route.fulfill({
             contentType: 'application/json',
             body: JSON.stringify(mockData),
